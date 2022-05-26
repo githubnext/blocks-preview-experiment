@@ -14,9 +14,10 @@ jobs:
           path: local
 
       - name: show event JSON
-        run: echo ${{ toJSON(github.event) }}
+        run: echo "${{ toJSON(github.event.repository) }}"
+
       - name: show clone output
-        run: echo ${{ steps.clone.outputs }}
+        run: echo "${{ steps.clone.outputs }}"
 
       - name: cache yarn deps
         uses: c-hive/gha-yarn-cache@v1
@@ -24,7 +25,7 @@ jobs:
       - name: Create build assets
         working-directory: ./local
         env:
-          BASE_URL: /${{ github.event.repository }}/${{ github.event.after }}
+          BASE_URL: /${{ github.event.repository.name }}/${{ github.event.after }}
         run: |
           yarn
           yarn build
