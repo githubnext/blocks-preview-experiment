@@ -7,32 +7,29 @@ jobs:
     runs-on: ubuntu-latest
     name: Update GH Pages
     steps:
+      #      - name: show github.event
+      #        run: echo "${{ toJSON(github.event) }}"
+
       - name: Clone repo locally
         id: clone
         uses: actions/checkout@v3
         with:
           path: local
 
-      - name: show github.event.repository
-        run: echo "${{ toJSON(github.event.repository) }}"
-
-      - name: show github.event.repository.name
-        run: echo "${{ github.event.repository.name }}"
-
       - name: show clone output
         run: echo "${{ steps.clone.outputs }}"
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - run: yarn
 
       - name: Create build assets
         working-directory: ./local
         env:
           BASE_PATH: /${{ github.event.repository.name }}/${{ github.event.after }}
-        run: |
-          yarn
-          yarn build
-
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
+        run: yarn build
 
       - name: Create gh-pages branch if it doesn't already exist
         uses: peterjgrainger/action-create-branch@v2.2.0
