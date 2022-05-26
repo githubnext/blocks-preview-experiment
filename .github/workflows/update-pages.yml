@@ -8,14 +8,23 @@ jobs:
     name: Update GH Pages
     steps:
       - name: Clone repo locally
+        id: clone
         uses: actions/checkout@v3
         with:
           path: local
 
+      - name: show event JSON
+        run: echo ${{ toJSON(github.event) }}
+      - name: show clone output
+        run: echo ${{ steps.clone.outputs }}
+
+      - name: cache yarn deps
+        uses: c-hive/gha-yarn-cache@v1
+
       - name: Create build assets
         working-directory: ./local
         env:
-          BASE_URL: /${{ github.event.repository.name }}/${{ github.event.after }}
+          BASE_URL: /${{ github.event.repository }}/${{ github.event.after }}
         run: |
           yarn
           yarn build
