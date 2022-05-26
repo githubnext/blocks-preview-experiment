@@ -1,0 +1,47 @@
+name: update-gh-pages
+
+on: [push]
+
+jobs:
+  update_pages_job:
+    runs-on: ubuntu-latest
+    name: Update GH Pages
+    steps:
+      - name: Clone repo locally
+        uses: actions/checkout@v3
+        with:
+          path: local
+
+      - name: Create build assets
+        working-directory: ./local
+        env:
+          BASE_URL: /${{ github.event.repository.repo }}/${{ github.event.after }}
+        run: |
+          yarn
+          yarn build
+
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+
+      - name: Clone the GH Pages branch
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Copy build assets into subfolder
+        run: cp -a ./local/out ./gh-pages/${{ github.event.after }}/
+
+      - name: Make .nojekyll file
+        working-directory: ./gh-pages
+        run: touch .nojekyll
+
+      - name: Commit & push to GH Pages branch
+        working-directory: ./gh-pages
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "update GH pages"
+          git push
