@@ -15,7 +15,7 @@ jobs:
       - name: Create build assets
         working-directory: ./local
         env:
-          BASE_URL: /${{ github.event.repository.repo }}/${{ github.event.after }}
+          BASE_URL: /${{ github.event.repository.name }}/${{ github.event.after }}
         run: |
           yarn
           yarn build
