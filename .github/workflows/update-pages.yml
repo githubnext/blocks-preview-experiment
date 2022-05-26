@@ -19,9 +19,6 @@ jobs:
       - name: show clone output
         run: echo "${{ steps.clone.outputs }}"
 
-      - name: cache yarn deps
-        uses: c-hive/gha-yarn-cache@v1
-
       - name: Create build assets
         working-directory: ./local
         env:
