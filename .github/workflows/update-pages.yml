@@ -13,8 +13,11 @@ jobs:
         with:
           path: local
 
-      - name: show event JSON
+      - name: show github.event.repository
         run: echo "${{ toJSON(github.event.repository) }}"
+
+      - name: show github.event.repository.name
+        run: echo "${{ github.event.repository.name }}"
 
       - name: show clone output
         run: echo "${{ steps.clone.outputs }}"
@@ -22,7 +25,7 @@ jobs:
       - name: Create build assets
         working-directory: ./local
         env:
-          BASE_URL: /${{ github.event.repository.name }}/${{ github.event.after }}
+          BASE_PATH: /${{ github.event.repository.name }}/${{ github.event.after }}
         run: |
           yarn
           yarn build
