@@ -27,12 +27,14 @@ const About: NextPage = () => {
       <div style={{
         width: "100%"
       }}>
+        {/* @ts-ignore */}
         <marquee style={{
           color: "pink",
         }}>
           <h2>
             This is a cool site!
           </h2>
+          {/* @ts-ignore */}
         </marquee>
       </div>
 
