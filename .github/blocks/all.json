@@ -1,5 +1,8 @@
 {
   "pages/about.tsx": {
     "default": "githubnext__preview-block__preview-file-block"
+  },
+  "pages/index.tsx": {
+    "default": "githubnext__preview-block__preview-file-block"
   }
 }
