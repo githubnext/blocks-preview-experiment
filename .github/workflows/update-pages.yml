@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: "16"
           cache: "yarn"
-        working-directory: ./local
+          cache-dependency-path: ./local/yarn.lock
 
       - run: yarn
         working-directory: ./local
