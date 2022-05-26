@@ -23,7 +23,10 @@ jobs:
         with:
           node-version: "16"
           cache: "yarn"
+        working-directory: ./local
+
       - run: yarn
+        working-directory: ./local
 
       - name: Create build assets
         working-directory: ./local
